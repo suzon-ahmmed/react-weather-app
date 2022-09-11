@@ -21,7 +21,8 @@ const App = () => {
     // set loading to true
     setLoading(true);
 
-    const url = `${process.env.REACT_APP_OPEN_WERARTHER_URL}?q=${location}&units=metric&appid=${process.env.REACT_APP_API_KEY}`;
+    // const url = `${process.env.REACT_APP_OPEN_WERARTHER_URL}?q=${location}&units=metric&appid=${process.env.REACT_APP_API_KEY}`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${process.env.REACT_APP_API_KEY}`;
 
     axios
       .get(url)
