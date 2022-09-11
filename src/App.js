@@ -9,9 +9,6 @@ import axios from "axios";
 
 import { ImSpinner8 } from "react-icons/im";
 
-// api key
-const APIkey = "4c21d1e655f2f2c4588a138da8873e1f";
-
 const App = () => {
   const [data, setData] = useState(null);
   const [location, setLocation] = useState("Dhaka");
@@ -24,7 +21,7 @@ const App = () => {
     // set loading to true
     setLoading(true);
 
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${APIkey}`;
+    const url = `${process.env.REACT_APP_OPEN_WERARTHER_URL}?q=${location}&units=metric&appid=${process.env.REACT_APP_API_KEY}`;
 
     axios
       .get(url)
@@ -61,37 +58,41 @@ const App = () => {
       </div>
     );
   }
-// console.log('main = '+data.weather[0].main);
-console.log('description = '+ data.weather[0].description);
-  // set the icon according to the weather
+  // console.log('data');
+  // console.log('description = '+ data.weather[0].description);
+  // set the backgroundImage according to the weather
   let bgImg;
-  // eslint-disable-next-line default-case
+
   switch (data.weather[0].main) {
     case "Clouds":
-      bgImg = 'bg-Clouds';
+      bgImg = "bg-Clouds";
       break;
     case "Haze":
-      bgImg = 'bg-Haze';
+      bgImg = "bg-Haze";
       break;
     case "Rain":
-      bgImg = 'bg-rain';
+      bgImg = "bg-rain";
       break;
     case "Clear":
-      bgImg = 'bg-clearSky';
+      bgImg = "bg-clearSky";
       break;
     case "Drizzle":
-      bgImg = 'bg-brizzle';
+      bgImg = "bg-brizzle";
       break;
     case "Snow":
-      bgImg = 'bg-snow';
+      bgImg = "bg-snow";
       break;
     case "Thunderstorm":
-      bgImg = 'bg-Thunderstorm ';
+      bgImg = "bg-Thunderstorm ";
       break;
+    default:
+      bgImg = "bg-default";
   }
 
   return (
-    <div className={`w-full h-screen ${bgImg}  bg-no-repeat bg-cover bg-center flex flex-col items-center justify-center px-4 lg:px-0 `}>
+    <div
+      className={`w-full h-screen ${bgImg}  bg-no-repeat bg-cover bg-center flex flex-col items-center justify-center px-4 lg:px-0 `}
+    >
       {errorMsg && (
         <div className="w-[320px] sm:w-[450px] text-center bg-red-500 text-white absolute top-2 z-10 lg:top-4 p-3 capitalize rounded-md">{`${errorMsg.response.data.message}`}</div>
       )}
