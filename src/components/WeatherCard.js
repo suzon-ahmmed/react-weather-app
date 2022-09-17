@@ -1,4 +1,4 @@
-import React from "react";
+// import React, { useEffect, useState } from "react";
 // import icons
 import {
   IoMdCloudy,
@@ -19,8 +19,38 @@ import {
 
 import { ImSpinner8 } from "react-icons/im";
 import { TbTemperatureCelsius } from "react-icons/tb";
+// import moment from "moment/moment";
 
 function WeatherCard({ loading, data }) {
+  // const [date, setDate] = useState(new Date());
+
+  // useEffect(() => {
+  //   setDate(new Date());
+  // }, []);
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const date = new Date();
   let icon;
   // eslint-disable-next-line default-case
   switch (data.weather[0].main) {
@@ -31,7 +61,7 @@ function WeatherCard({ loading, data }) {
       icon = <BsCloudHaze2Fill />;
       break;
     case "Rain":
-      icon = <IoMdRainy  />;
+      icon = <IoMdRainy />;
       break;
     case "Clear":
       icon = <IoMdSunny />;
@@ -47,8 +77,8 @@ function WeatherCard({ loading, data }) {
       break;
   }
   // date object
-  const date = new Date();
-//   console.log('I am Weather card.');
+  //   console.log('I am Weather card.');
+  console.log(data);
   return (
     <div>
       <div className="w-full min-w-[320px] sm:w-[450px] bg-black/20 h-[420px] sm:h-[570px] text-white backdrop-blur-sm rounded-lg py-6 sm:py-12 px-6">
@@ -62,15 +92,21 @@ function WeatherCard({ loading, data }) {
             <div className="flex items-center gap-x-5">
               {/* icon */}
               <div className="text-[86px] sm:text-[98px]">{icon}</div>
+
               <div>
                 {/* country name */}
                 <div className="text-2xl font-semibold">
                   {data.name}, {data.sys.country}
                 </div>
+
                 {/* date */}
                 <div>
-                  {date.getUTCDate()}/{date.getUTCMonth() + 1}/
-                  {date.getUTCFullYear()}
+                  {/* days[day] + ", " + date + " " + months[month] */}
+                  {days[date.getDay()]}, {[date.getDate()]}'
+                  {months[date.getMonth()]}
+                </div>
+                <div className="text-sm leading-4">
+                  {/* Locale Time: {moment(data.timezone).format("h:mm:ss a")} */}
                 </div>
               </div>
             </div>

@@ -12,7 +12,6 @@ import { ImSpinner8 } from "react-icons/im";
 const App = () => {
   const [data, setData] = useState(null);
   const [location, setLocation] = useState("Dhaka");
-
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -20,17 +19,13 @@ const App = () => {
   useEffect(() => {
     // set loading to true
     setLoading(true);
-
-    // const url = `${process.env.REACT_APP_OPEN_WERARTHER_URL}?q=${location}&units=metric&appid=${process.env.REACT_APP_API_KEY}`;
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=4c21d1e655f2f2c4588a138da8873e1f`;
-
+    const url = `${process.env.REACT_APP_OPEN_WERARTHER_URL}?q=${location}&units=metric&appid=${process.env.REACT_APP_API_KEY}`;
     axios
       .get(url)
       .then((res) => {
         // set the data after 1500 ms
         setTimeout(() => {
           setData(res.data);
-          // set loading to false
           setLoading(false);
         }, 1500);
       })
@@ -38,6 +33,7 @@ const App = () => {
         setLoading(false);
         setErrorMsg(err);
       });
+    
   }, [location]);
 
   // error message
@@ -63,7 +59,6 @@ const App = () => {
   // console.log('description = '+ data.weather[0].description);
   // set the backgroundImage according to the weather
   let bgImg;
-
   switch (data.weather[0].main) {
     case "Clouds":
       bgImg = "bg-Clouds";
