@@ -18,29 +18,26 @@ const App = () => {
   // fetch the data
   useEffect(() => {
     // set loading to true
-    const unSub = () => {
-      setLoading(true);
-      const url = `${process.env.REACT_APP_OPEN_WERARTHER_URL}?q=${location}&units=metric&appid=${process.env.REACT_APP_API_KEY}`;
-      axios
-        .get(url)
-        .then((res) => {
-          // set the data after 1500 ms
-          setTimeout(() => {
-            setData(res.data);
-            setLoading(false);
-          }, 1500);
-        })
-        .catch((err) => {
+    
+    setLoading(true);
+    const url = `${process.env.REACT_APP_OPEN_WERARTHER_URL}?q=${location}&units=metric&appid=${process.env.REACT_APP_API_KEY}`;
+    axios
+      .get(url)
+      .then((res) => {
+        // set the data after 1500 ms
+        setTimeout(() => {
+          setData(res.data);
           setLoading(false);
-          setErrorMsg(err);
-        });
-    };
-    return () => {
-      unSub();
-    };
+        }, 1500);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setErrorMsg(err);
+      });
+    
   }, [location]);
 
-  // console.log(data);
+  console.log(data);
   // error message
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -48,7 +45,6 @@ const App = () => {
     }, 2000);
     // clear timer
     return () => clearTimeout(timer);
-  
   }, [errorMsg]);
 
   // if data is false show the loader

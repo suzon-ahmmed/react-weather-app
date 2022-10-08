@@ -19,14 +19,9 @@ import {
 
 import { ImSpinner8 } from "react-icons/im";
 import { TbTemperatureCelsius } from "react-icons/tb";
-// import moment from "moment/moment";
 
 function WeatherCard({ loading, data }) {
-  // const [date, setDate] = useState(new Date());
 
-  // useEffect(() => {
-  //   setDate(new Date());
-  // }, []);
   const days = [
     "Sunday",
     "Monday",
@@ -76,19 +71,27 @@ function WeatherCard({ loading, data }) {
       icon = <IoMdThunderstorm />;
       break;
   }
-  // date object
-  //   console.log('I am Weather card.');
-  // console.log(data);
-  // convert time 
 
-   let sunset = data.sys.sunset;
-  let LDate = new Date(sunset * 1000);
-  let setSunset = `${LDate.getHours()}:${LDate.getMinutes()}`
-  console.log(setSunset);
+  let Time = new Date();
+  let localeTime =  `${
+    Time.getHours() >= 12 ? Time.getHours() - 12 : Time.getHours()
+  }:${Time.getMinutes()} ${Time.getHours() >= 12 ? "PM" : "AM"}`;
+
+
+  let sunset = new Date(data.sys.sunset * 1000);
+  let setSunset = `${
+    sunset.getHours() >= 12 ? sunset.getHours() - 12 : sunset.getHours()
+  }:${sunset.getMinutes()} ${sunset.getHours() >= 12 ? "PM" : "AM"}`;
+
+  let sunrise = new Date(data.sys.sunrise * 1000);
+  let setSunrise = `${
+    sunrise.getHours() >= 12 ? sunrise.getHours() - 12 : sunrise.getHours()
+  }:${sunrise.getMinutes()} ${sunrise.getHours() >= 12 ? "PM" : "AM"}`;
+  // console.log(setSunset);
 
   return (
     <div>
-      <div className="w-full min-w-[320px] sm:w-[450px] bg-black/20 h-[420px] sm:h-[570px] text-white backdrop-blur-sm rounded-lg py-6 sm:py-12 px-6">
+      <div className="w-full min-w-[320px] sm:w-[450px] bg-black/20 h-[420px] sm:h-[570px] text-white backdrop-blur-sm rounded-lg p-4 sm:py-12 sm:p-6">
         {loading ? (
           <div className="w-full h-full flex justify-center items-center">
             <ImSpinner8 className="text-white text-5xl animate-spin" />
@@ -96,10 +99,9 @@ function WeatherCard({ loading, data }) {
         ) : (
           <div className="h-full flex flex-col justify-between">
             {/* card top */}
-            <div className="flex items-center gap-x-5">
+            <div className="flex items-center space-x-4 sm:space-x-4">
               {/* icon */}
-              <div className="text-[86px] sm:text-[98px]">{icon}</div>
-
+              <div className="text-[86px] sm:text-[98px] mt-2">{icon}</div>
               <div>
                 {/* country name */}
                 <div className="text-2xl font-semibold">
@@ -108,12 +110,17 @@ function WeatherCard({ loading, data }) {
 
                 {/* date */}
                 <div>
-                  {/* days[day] + ", " + date + " " + months[month] */}
                   {days[date.getDay()]}, {[date.getDate()]}'
-                  {months[date.getMonth()]}
+                  {months[date.getMonth()]}, {localeTime}
                 </div>
-                <div className="text-sm">
-                  Locale Time: {setSunset}
+                {/* <div className="text-sm">Locale Time: {localeTime}</div> */}
+                <div className="flex justify-center text-sm leading-none text-gray-100 mt-1">
+                  <div className="pr-2 border-r-2 flex items-center">
+                    Sunrise: {setSunrise}
+                  </div>
+                  <div className="pl-2 flex items-center">
+                    Sunset: {setSunset}
+                  </div>
                 </div>
               </div>
             </div>
@@ -130,8 +137,12 @@ function WeatherCard({ loading, data }) {
                 </div>
               </div>
               <div className="flex justify-center text-sm leading-none text-gray-100">
-                <div className="pr-2 border-r-2 flex items-center">Min: {(data.main.temp_min)}  <TbTemperatureCelsius /> </div>
-                <div className="pl-2 flex items-center">Max: {(data.main.temp_max)}  <TbTemperatureCelsius /></div>
+                <div className="pr-2 border-r-2 flex items-center">
+                  Min: {data.main.temp_min} <TbTemperatureCelsius />{" "}
+                </div>
+                <div className="pl-2 flex items-center">
+                  Max: {data.main.temp_max} <TbTemperatureCelsius />
+                </div>
               </div>
               {/* weather description */}
               <div className="capitalize text-center sm:text-2xl">
