@@ -78,7 +78,14 @@ function WeatherCard({ loading, data }) {
   }
   // date object
   //   console.log('I am Weather card.');
-  console.log(data);
+  // console.log(data);
+  // convert time 
+
+   let sunset = data.sys.sunset;
+  let LDate = new Date(sunset * 1000);
+  let setSunset = `${LDate.getHours()}:${LDate.getMinutes()}`
+  console.log(setSunset);
+
   return (
     <div>
       <div className="w-full min-w-[320px] sm:w-[450px] bg-black/20 h-[420px] sm:h-[570px] text-white backdrop-blur-sm rounded-lg py-6 sm:py-12 px-6">
@@ -105,22 +112,26 @@ function WeatherCard({ loading, data }) {
                   {days[date.getDay()]}, {[date.getDate()]}'
                   {months[date.getMonth()]}
                 </div>
-                <div className="text-sm leading-4">
-                  {/* Locale Time: {moment(data.timezone).format("h:mm:ss a")} */}
+                <div className="text-sm">
+                  Locale Time: {setSunset}
                 </div>
               </div>
             </div>
             {/* card body */}
             <div className="-mt-[12px]">
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center">
                 {/* temp */}
                 <div className="text-[102px] sm:text-[144px] leading-none font-light">
                   {parseInt(data.main.temp)}
                 </div>
                 {/* celsius icon */}
-                <div className="text-4xl">
+                <div className="text-4xl mt-6">
                   <TbTemperatureCelsius />
                 </div>
+              </div>
+              <div className="flex justify-center text-sm leading-none text-gray-100">
+                <div className="pr-2 border-r-2 flex items-center">Min: {(data.main.temp_min)}  <TbTemperatureCelsius /> </div>
+                <div className="pl-2 flex items-center">Max: {(data.main.temp_max)}  <TbTemperatureCelsius /></div>
               </div>
               {/* weather description */}
               <div className="capitalize text-center sm:text-2xl">
