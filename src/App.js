@@ -37,7 +37,7 @@ const App = () => {
     
   }, [location]);
 
-  console.log(data);
+  // console.log(data);
   // error message
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -52,6 +52,7 @@ const App = () => {
     return (
       <div className="w-full h-screen bg-gradientBg bg-no-repeat bg-cover bg-center flex flex-col justify-center items-center">
         <div>
+
           <ImSpinner8 className="text-5xl animate-spin text-white" />
         </div>
       </div>

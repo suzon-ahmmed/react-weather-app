@@ -1,16 +1,6 @@
 // import React, { useEffect, useState } from "react";
-// import icons
-import {
-  IoMdCloudy,
-  IoMdRainy,
-  IoMdSnow,
-  IoMdSunny,
-  IoMdThunderstorm,
-} from "react-icons/io";
 
 import {
-  BsCloudDrizzleFill,
-  BsCloudHaze2Fill,
   BsEye,
   BsThermometer,
   BsWater,
@@ -21,7 +11,6 @@ import { ImSpinner8 } from "react-icons/im";
 import { TbTemperatureCelsius } from "react-icons/tb";
 
 function WeatherCard({ loading, data }) {
-
   const days = [
     "Sunday",
     "Monday",
@@ -46,37 +35,10 @@ function WeatherCard({ loading, data }) {
     "Dec",
   ];
   const date = new Date();
-  let icon;
-  // eslint-disable-next-line default-case
-  switch (data.weather[0].main) {
-    case "Clouds":
-      icon = <IoMdCloudy />;
-      break;
-    case "Haze":
-      icon = <BsCloudHaze2Fill />;
-      break;
-    case "Rain":
-      icon = <IoMdRainy />;
-      break;
-    case "Clear":
-      icon = <IoMdSunny />;
-      break;
-    case "Drizzle":
-      icon = <BsCloudDrizzleFill />;
-      break;
-    case "Snow":
-      icon = <IoMdSnow />;
-      break;
-    case "Thunderstorm":
-      icon = <IoMdThunderstorm />;
-      break;
-  }
 
-  let Time = new Date();
-  let localeTime =  `${
-    Time.getHours() >= 12 ? Time.getHours() - 12 : Time.getHours()
-  }:${Time.getMinutes()} ${Time.getHours() >= 12 ? "PM" : "AM"}`;
-
+  let localeTime = `${
+    date.getHours() >= 12 ? date.getHours() - 12 : date.getHours()
+  }:${date.getMinutes()} ${date.getHours() >= 12 ? "PM" : "AM"}`;
 
   let sunset = new Date(data.sys.sunset * 1000);
   let setSunset = `${
@@ -99,9 +61,14 @@ function WeatherCard({ loading, data }) {
         ) : (
           <div className="h-full flex flex-col justify-between">
             {/* card top */}
-            <div className="flex items-center space-x-4 sm:space-x-4">
+            <div className="flex items-center space-x-0 sm:space-x-4">
               {/* icon */}
-              <div className="text-[86px] sm:text-[98px] mt-2">{icon}</div>
+              <div className="mt-2">
+                <img className="w-[78px] sm:w-[118px]"
+                  src={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`}
+                  alt="wthr img"
+                />
+              </div>
               <div>
                 {/* country name */}
                 <div className="text-2xl font-semibold">
