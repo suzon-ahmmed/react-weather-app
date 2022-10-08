@@ -63,8 +63,8 @@ function WeatherCard({ loading, data }) {
             {/* card top */}
             <div className="flex items-center space-x-0 sm:space-x-4">
               {/* icon */}
-              <div className="mt-2">
-                <img className="w-[78px] sm:w-[118px]"
+              <div className="w-[78px] sm:w-[118px]">
+                <img className="w-full -my-4"
                   src={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`}
                   alt="wthr img"
                 />
